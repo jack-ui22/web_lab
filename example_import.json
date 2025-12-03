@@ -1,0 +1,38 @@
+{
+  "study": [
+    {
+      "name": "示例学习网站",
+      "url": "https://example-study.com"
+    }
+  ],
+  "life": [
+    {
+      "name": "示例生活网站",
+      "url": "https://example-life.com"
+    }
+  ],
+  "tools": [
+    {
+      "name": "示例工具网站",
+      "url": "https://example-tools.com"
+    }
+  ],
+  "web": [
+    {
+      "name": "示例常用网站",
+      "url": "https://example-web.com"
+    }
+  ],
+  "campus": [
+    {
+      "name": "示例校园网站",
+      "url": "https://example-campus.com"
+    }
+  ],
+  "ai": [
+    {
+      "name": "示例AI工具",
+      "url": "https://example-ai.com"
+    }
+  ]
+}
