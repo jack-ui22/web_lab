@@ -15,21 +15,28 @@
     }
 
     :root {
-      --bg-primary: #0a0a0f;
-      --bg-secondary: #12121e;
-      --bg-card: #1a1a2e;
-      --bg-card-hover: #222236;
-      --text-primary: #ffffff;
-      --text-secondary: #b0b0cc;
-      --accent-primary: #6366f1;
-      --accent-secondary: #4f46e5;
-      --border-color: #2a2a40;
-      --shadow-card: 0 10px 30px rgba(0, 0, 0, 0.2);
+      --bg-primary: #f8f9fa;
+      --bg-secondary: #e9ecef;
+      --bg-card: #ffffff;
+      --bg-card-hover: #f1f3f5;
+      --text-primary: #212529;
+      --text-secondary: #6c757d;
+      --accent-primary: #6c757d;
+      --accent-secondary: #495057;
+      --border-color: #dee2e6;
+      --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.08);
       --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     body {
       background-color: var(--bg-primary);
+      background-image: 
+        radial-gradient(var(--accent-primary) 1px, transparent 1px),
+        radial-gradient(var(--accent-primary) 1px, transparent 1px);
+      background-size: 50px 50px;
+      background-position: 0 0, 25px 25px;
+      background-attachment: fixed;
+      background-blend-mode: soft-light;
       color: var(--text-primary);
       min-height: 100vh;
       overflow-x: hidden;
@@ -185,83 +192,94 @@
       min-height: calc(100vh - 70px);
     }
 
-    /* 左侧选项卡 */
-    .sidebar {
-      width: 260px;
-      background-color: var(--bg-secondary);
-      border-radius: 16px;
-      border: 1px solid var(--border-color);
-      padding: 20px;
-      position: sticky;
-      top: 90px;
-      height: fit-content;
-    }
-
-    .sidebar-header {
-      margin-bottom: 20px;
-    }
-
-    .sidebar-title {
-      font-size: 18px;
-      font-weight: 600;
-      margin-bottom: 5px;
-      color: var(--text-primary);
-    }
-
-    .sidebar-subtitle {
-      font-size: 14px;
-      color: var(--text-secondary);
-    }
-
-    .category-tabs {
-      list-style: none;
-    }
-
-    .category-tab {
-      margin-bottom: 8px;
-    }
-
-    .category-tab button {
-      width: 100%;
-      padding: 14px 16px;
-      background-color: transparent;
-      border: none;
-      border-radius: 12px;
-      color: var(--text-primary);
-      font-size: 15px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: var(--transition);
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      text-align: left;
-      outline: none;
-    }
-
-    .category-tab button:hover {
-      background-color: var(--bg-card);
-      transform: translateX(4px);
-    }
-
-    .category-tab button.active {
-      background-color: var(--accent-primary);
-      color: white;
-    }
-
-    .category-tab button i {
-      font-size: 20px;
-      width: 24px;
-      text-align: center;
-    }
-
     /* 内容区域 */
     .content-area {
+      margin-left: 0;
+      padding: 30px;
+      background-color: var(--bg-primary);
+      overflow-y: auto;
       flex: 1;
-      background-color: var(--bg-secondary);
-      border-radius: 16px;
-      border: 1px solid var(--border-color);
+    }
+    
+    /* 最近打开网站样式 */
+    .recently-opened-section {
+      margin-bottom: 30px;
+      background-color: var(--bg-card);
+      border-radius: 12px;
       padding: 20px;
+      box-shadow: var(--shadow-card);
+    }
+    
+    .recently-opened-header {
+      margin-bottom: 15px;
+    }
+    
+    .recently-opened-header h3 {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-primary);
+      font-size: 18px;
+      font-weight: 600;
+      margin: 0;
+    }
+    
+    .recently-opened-grid {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+    
+    .recent-site-card {
+      flex: 1;
+      min-width: 150px;
+      max-width: 200px;
+      background-color: var(--bg-secondary);
+      border-radius: 8px;
+      padding: 12px;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+    
+    .recent-site-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    .empty-message {
+      color: var(--text-secondary);
+      text-align: center;
+      padding: 20px;
+      font-style: italic;
+    }
+    
+    .recent-site-card .site-icon {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: var(--accent-primary);
+      margin-bottom: 8px;
+    }
+    
+    .recent-site-card .site-info {
+      margin-top: 8px;
+    }
+    
+    .recent-site-card .site-name {
+      font-size: 14px;
+      margin-bottom: 4px;
+      color: var(--text-primary);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    
+    .recent-site-card .site-time {
+      font-size: 12px;
+      color: var(--text-secondary);
     }
 
     .content-header {
@@ -289,6 +307,39 @@
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       gap: 20px;
+      transition: opacity 0.3s ease;
+    }
+    
+    /* 访问次数指示器 */
+    .visit-count {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+      color: white;
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .site-card:hover .visit-count {
+      opacity: 1;
+    }
+    
+    /* 优化动画效果 */
+    .site-card {
+      transform: translateY(0);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .site-card:hover {
+      transform: translateY(-3px) scale(1.01);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
     }
 
     .site-card {
@@ -792,6 +843,7 @@
         <i class="fas fa-download"></i>
         导出
       </button>
+      <!-- 导航栏按钮 -->
       <button class="nav-btn primary" id="addSiteBtn">
         <i class="fas fa-plus"></i>
         添加网站
@@ -801,68 +853,28 @@
 
   <!-- 主内容区 -->
   <div class="main-content">
-    <!-- 左侧选项卡 -->
-    <aside class="sidebar">
-      <div class="sidebar-header">
-        <h2 class="sidebar-title">网站分类</h2>
-        <p class="sidebar-subtitle">快速访问您的收藏</p>
-      </div>
-      
-      <ul class="category-tabs">
-        <li class="category-tab">
-          <button class="active" data-category="all">
-            <i class="fas fa-th-large"></i>
-            <span>全部</span>
-          </button>
-        </li>
-        <li class="category-tab">
-          <button data-category="study">
-            <i class="fas fa-book"></i>
-            <span>学习</span>
-          </button>
-        </li>
-        <li class="category-tab">
-          <button data-category="life">
-            <i class="fas fa-home"></i>
-            <span>生活</span>
-          </button>
-        </li>
-        <li class="category-tab">
-          <button data-category="tools">
-            <i class="fas fa-tools"></i>
-            <span>工具</span>
-          </button>
-        </li>
-        <li class="category-tab">
-          <button data-category="web">
-            <i class="fas fa-globe"></i>
-            <span>常用外站</span>
-          </button>
-        </li>
-        <li class="category-tab">
-          <button data-category="campus">
-            <i class="fas fa-school"></i>
-            <span>校园服务</span>
-          </button>
-        </li>
-        <li class="category-tab">
-          <button data-category="ai">
-            <i class="fas fa-robot"></i>
-            <span>AI工具</span>
-          </button>
-        </li>
-      </ul>
-    </aside>
-
     <!-- 内容区域 -->
     <main class="content-area">
-      <div class="content-header">
-        <h1 class="content-title" id="categoryTitle">
-          <i class="fas fa-th-large"></i>
-          全部网站
-        </h1>
-        <span class="content-stats" id="siteCount">0 个网站</span>
-      </div>
+        <div class="content-header">
+          <h1 class="content-title" id="categoryTitle">
+            <i class="fas fa-th-large"></i>
+            推荐
+          </h1>
+          <span class="content-stats" id="siteCount">0 个网站</span>
+        </div>
+        
+        <!-- 最近打开网站区域 -->
+        <div class="recently-opened-section">
+          <div class="recently-opened-header">
+            <h3>
+              <i class="fas fa-history"></i>
+              最近打开
+            </h3>
+          </div>
+          <div class="recently-opened-grid" id="recentlyOpenedGrid">
+            <div class="empty-message">暂无最近打开的网站</div>
+          </div>
+        </div>
 
       <!-- 网站卡片网格 -->
       <div class="sites-grid" id="sitesGrid"></div>
@@ -988,39 +1000,33 @@
     };
 
     // 分类信息
-    const categories = {
-      all: { name: '全部网站', icon: 'fas fa-th-large' },
-      study: { name: '学习', icon: 'fas fa-book' },
-      life: { name: '生活', icon: 'fas fa-home' },
-      tools: { name: '工具', icon: 'fas fa-tools' },
-      web: { name: '常用外站', icon: 'fas fa-globe' },
-      campus: { name: '校园服务', icon: 'fas fa-school' },
-      ai: { name: 'AI工具', icon: 'fas fa-robot' }
-    };
+  const categories = {
+    all: { name: '推荐', icon: 'fas fa-th-large' }
+  };
 
     // DOM 元素
-    const addModal = document.getElementById('addModal');
-    const deleteModal = document.getElementById('deleteModal');
-    const addSiteBtn = document.getElementById('addSiteBtn');
-    const emptyAddBtn = document.getElementById('emptyAddBtn');
-    const closeModalBtn = document.getElementById('closeModalBtn');
-    const addSiteForm = document.getElementById('addSiteForm');
-    const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
-    const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
-    const sitesGrid = document.getElementById('sitesGrid');
-    const searchInput = document.getElementById('searchInput');
-    const searchEngine = document.getElementById('searchEngine');
-    const searchResults = document.getElementById('searchResults');
-    const searchResultsHeader = document.getElementById('searchResultsHeader');
-    const searchQuery = document.getElementById('searchQuery');
-    const searchResultsGrid = document.getElementById('searchResultsGrid');
-    const emptyState = document.getElementById('emptyState');
-    const categoryTitle = document.getElementById('categoryTitle');
-    const siteCount = document.getElementById('siteCount');
-    const categoryButtons = document.querySelectorAll('.category-tab button');
-    const importBtn = document.getElementById('importBtn');
-    const exportBtn = document.getElementById('exportBtn');
-    const fileInput = document.getElementById('fileInput');
+  const addModal = document.getElementById('addModal');
+  const deleteModal = document.getElementById('deleteModal');
+  const addSiteBtn = document.getElementById('addSiteBtn');
+  const emptyAddBtn = document.getElementById('emptyAddBtn');
+  const closeModalBtn = document.getElementById('closeModalBtn');
+  const addSiteForm = document.getElementById('addSiteForm');
+  const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
+  const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+  const sitesGrid = document.getElementById('sitesGrid');
+  const searchInput = document.getElementById('searchInput');
+  const searchEngine = document.getElementById('searchEngine');
+  const searchResults = document.getElementById('searchResults');
+  const searchResultsHeader = document.getElementById('searchResultsHeader');
+  const searchQuery = document.getElementById('searchQuery');
+  const searchResultsGrid = document.getElementById('searchResultsGrid');
+  const emptyState = document.getElementById('emptyState');
+  const categoryTitle = document.getElementById('categoryTitle');
+  const siteCount = document.getElementById('siteCount');
+  const importBtn = document.getElementById('importBtn');
+  const exportBtn = document.getElementById('exportBtn');
+  const fileInput = document.getElementById('fileInput');
+  const recentlyOpenedGrid = document.getElementById('recentlyOpenedGrid');
 
     // 当前选中的分类
     let currentCategory = 'all';
@@ -1050,11 +1056,140 @@
       localStorage.setItem('sites', JSON.stringify(sites));
     }
 
+    // 获取访问统计数据
+    function getVisitCounts() {
+      const counts = localStorage.getItem('siteVisitCounts');
+      return counts ? JSON.parse(counts) : {};
+    }
+
+    // 保存访问统计数据
+    function saveVisitCounts(counts) {
+      localStorage.setItem('siteVisitCounts', JSON.stringify(counts));
+    }
+
+    // 增加网站访问计数
+  function incrementVisitCount(url) {
+    // 从localStorage获取访问记录
+    let visitRecords = JSON.parse(localStorage.getItem('visitRecords') || '{}');
+    
+    // 更新访问计数
+    if (!visitRecords[url]) {
+      visitRecords[url] = { count: 0, lastVisited: null };
+    }
+    
+    visitRecords[url].count++;
+    visitRecords[url].lastVisited = new Date().toISOString();
+    
+    // 保存回localStorage
+    localStorage.setItem('visitRecords', JSON.stringify(visitRecords));
+    
+    // 更新最近打开列表
+    updateRecentlyOpenedList();
+  }
+  
+  // 获取最近打开的网站
+  function getRecentlyOpenedSites() {
+    let visitRecords = JSON.parse(localStorage.getItem('visitRecords') || '{}');
+    const sites = getSites();
+    const allSites = [];
+    
+    // 收集所有网站
+    Object.keys(sites).forEach(cat => {
+      if (sites[cat] && Array.isArray(sites[cat])) {
+        sites[cat].forEach(site => {
+          allSites.push({ ...site, category: cat });
+        });
+      }
+    });
+    
+    // 添加默认数据中不存在的网站
+    Object.keys(defaultSites).forEach(cat => {
+      if (defaultSites[cat] && Array.isArray(defaultSites[cat])) {
+        defaultSites[cat].forEach(defSite => {
+          // 检查是否已存在
+          const exists = allSites.some(site => site.url === defSite.url);
+          if (!exists) {
+            allSites.push({ ...defSite, category: cat, isDefault: true });
+          }
+        });
+      }
+    });
+    
+    // 将网站与访问记录匹配并按最后访问时间排序
+    let sitesWithVisitTime = allSites
+      .filter(site => visitRecords[site.url] && visitRecords[site.url].lastVisited)
+      .map(site => ({
+        ...site,
+        lastVisited: new Date(visitRecords[site.url].lastVisited)
+      }));
+    
+    // 按最后访问时间降序排序，只返回前5个
+    return sitesWithVisitTime
+      .sort((a, b) => b.lastVisited - a.lastVisited)
+      .slice(0, 5);
+  }
+  
+  // 更新最近打开列表UI
+  function updateRecentlyOpenedList() {
+    const recentSites = getRecentlyOpenedSites();
+    recentlyOpenedGrid.innerHTML = '';
+    
+    if (recentSites.length === 0) {
+      recentlyOpenedGrid.innerHTML = '<div class="empty-message">暂无最近打开的网站</div>';
+      return;
+    }
+    
+    recentSites.forEach(site => {
+      const card = document.createElement('div');
+      card.className = 'recent-site-card';
+      
+      // 获取网站图标
+      const iconClass = getSiteIcon(site.name);
+      
+      // 格式化最近访问时间
+      const now = new Date();
+      const diff = now - new Date(site.lastVisited);
+      const minutes = Math.floor(diff / 60000);
+      const hours = Math.floor(diff / 3600000);
+      let timeDisplay;
+      
+      if (minutes < 1) {
+        timeDisplay = '刚刚';
+      } else if (minutes < 60) {
+        timeDisplay = `${minutes}分钟前`;
+      } else if (hours < 24) {
+        timeDisplay = `${hours}小时前`;
+      } else {
+        const days = Math.floor(hours / 24);
+        timeDisplay = `${days}天前`;
+      }
+      
+      card.innerHTML = `
+        <div class="site-icon">
+          <i class="fas ${iconClass}"></i>
+        </div>
+        <div class="site-info">
+          <div class="site-name">${site.name}</div>
+          <div class="site-time">${timeDisplay}</div>
+        </div>
+      `;
+      
+      // 添加点击事件
+      card.addEventListener('click', () => {
+        window.open(site.url, '_blank');
+        incrementVisitCount(site.url);
+      });
+      
+      recentlyOpenedGrid.appendChild(card);
+    });
+  }
+
     // 获取分类的网站
-    function getCategorySites(category) {
-      const sites = getSites();
-      if (category === 'all') {
-        // 获取所有分类的网站
+  function getCategorySites(category) {
+    const sites = getSites();
+    
+    if (category === 'all') {
+        // 获取所有分类的网站（推荐）
         let allSites = [];
         Object.keys(sites).forEach(cat => {
           if (sites[cat] && Array.isArray(sites[cat])) {
@@ -1075,7 +1210,10 @@
             });
           }
         });
-        return allSites;
+        
+        // 根据访问次数排序，优先显示访问次数多的网站
+        const visitCounts = getVisitCounts();
+        return allSites.sort((a, b) => (visitCounts[b.url] || 0) - (visitCounts[a.url] || 0));
       } else {
         // 获取指定分类的网站
         const userSites = sites[category] || [];
@@ -1088,7 +1226,10 @@
             merged.push(site);
           }
         });
-        return merged;
+        
+        // 根据访问次数排序
+        const visitCounts = getVisitCounts();
+        return merged.sort((a, b) => (visitCounts[b.url] || 0) - (visitCounts[a.url] || 0));
       }
     }
 
@@ -1145,10 +1286,17 @@
       const iconClass = getSiteIcon(site.name);
       const domain = new URL(site.url).hostname;
       
+      const visitCounts = getVisitCounts();
+      const visitCount = visitCounts[site.url] || 0;
+      
       const card = document.createElement('div');
       card.className = 'site-card';
       card.dataset.url = site.url;
       card.innerHTML = `
+        <div class="visit-count">
+          <i class="fas fa-eye"></i>
+          <span>${visitCount}</span>
+        </div>
         <div class="site-card-header">
           <div class="site-icon">
             <i class="${iconClass}"></i>
@@ -1168,6 +1316,8 @@
       card.addEventListener('click', (e) => {
         // 如果点击的是按钮，不触发打开网站
         if (e.target.closest('.site-action-btn')) return;
+        // 增加访问计数
+        incrementVisitCount(site.url);
         window.open(site.url, '_blank');
       });
 
@@ -1347,6 +1497,8 @@
 
     // 事件监听器
     function setupEventListeners() {
+      // 初始化最近打开列表
+      updateRecentlyOpenedList();
       // 添加网站按钮
       addSiteBtn.addEventListener('click', showAddModal);
       emptyAddBtn.addEventListener('click', showAddModal);
@@ -1383,13 +1535,7 @@
         }
       });
       
-      // 分类切换
-      categoryButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-          const category = btn.dataset.category;
-          switchCategory(category);
-        });
-      });
+      // 其他功能已集成到推荐页面
       
       // 搜索 - 输入时本地搜索，回车时外部搜索
       searchInput.addEventListener('input', (e) => {
